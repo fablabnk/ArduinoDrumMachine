@@ -2,7 +2,7 @@
 
 ## The Goal / Spec
 
-(just a draft, we can make this better!)
+(Current goal is just a draft, we can make this better!)
 
 Build a simple Arduino-based 8-bit drum player with three-channels, where:
 - the user can select the three drums out of eight possible samples
