@@ -168,3 +168,23 @@ Unfortunately the above approach produces a lot of similar code. Now we should c
 - Eurorack it based on https://github.com/wgd-modular/utf-8-samplified
 	- gate inputs using voltage
 	- including an omp to raise output level to eurorack level
+
+## Guide to Loading Samples
+
+- install Audacity
+- load your sample to an empty audacity project
+- click on file->export audio on the menu bar
+- use the following settings
+  filename: "sample.raw"
+  folder: choose a suitable folder
+  format: Other uncompressed file
+  channels: mono
+  sample_rate: 40k
+  header: RAW (headerless)
+  encoding: Unsigned 8 bit
+- copy the resulting file to the utilities folder 
+- run renderer.py
+- now there is a resulting sample.h file that includes an array of unsigned ints
+- TODO: edit renderer.py so that it prints the size of the array
+- copy the contents of the array to the memory slot you want to replace
+- voila! 
