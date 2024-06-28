@@ -152,7 +152,25 @@ void triggerBD()
 
 ## V1.4: Use arrays of pins to simplify the code
 
-Unfortunately the above approach produces a lot of similar code. Now we should condense the code to use arrays, instead of separated named function for each drum. This can be our starting point for adding new features, with the aim being the spec stated at the beginning of this readme!
+Unfortunately the above approach produces a lot of similar code. In v1.4 we have condensed the code to use arrays, instead of separated named functions for each drum. This unfortunately has some limitations, for example trying to condense the following code into a for loop running over the array from 0-7 causes sample corruption. So we live with this for now
+
+```
+    if (samplecnts[0]) {
+        phaccs[0] += pitches[0];
+        if (phaccs[0] & 128) {
+            phaccs[0] &= 127;
+            samplepnts[0]++;
+            samplecnts[0]--;
+        }
+        total += (pgm_read_byte_near(drumSamples[0] + samplepnts[0]) - 128);
+    }
+```
+
+This is now our starting point for adding new features, with the aim being the spec stated at the beginning of this readme!
+
+## V1.5: Low pass filtering
+
+In the process of adding a low pass filter
 
 ## Features To Add
 
