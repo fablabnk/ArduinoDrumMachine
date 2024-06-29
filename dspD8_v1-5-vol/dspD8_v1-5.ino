@@ -52,7 +52,11 @@ ISR(TIMER1_COMPA_vect)
 		int16_t rawOutput = Ringbuffer[RingRead++];
 		filteredOutput = (alpha * rawOutput) + ((1 - alpha) * filteredOutput);
 		amplifiedOutput = filteredOutput * vol;
+		
 		OCR2A = filteredOutput; // Output LSB of 16-bit DAC
+		
+		//uncomment this for the amplified out
+		//OCR2A = filteredOutput;
 		RingCount--;
 	}
 
