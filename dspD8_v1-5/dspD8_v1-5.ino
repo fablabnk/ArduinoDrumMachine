@@ -94,7 +94,7 @@ void setup()
 
 	pinMode(LFilterPin, INPUT);
 
-	// 8-bit PWM DAC pin
+	// 8-bit PWM DAC pin+
 	pinMode(11, OUTPUT);
 
 	// Set up Timer 1 to send a sample every interrupt.
