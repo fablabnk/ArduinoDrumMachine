@@ -36,6 +36,8 @@ uint8_t RingRead = 0;
 volatile uint8_t RingCount = 0;
 
 const int LFilterPin = A4;
+const int VolPin = A3;
+float vol = 1.0;
 float alpha = 0.1;
 int16_t filteredOutput = 0;
 
@@ -49,7 +51,12 @@ ISR(TIMER1_COMPA_vect)
 	{ // If entry in FIFO..
 		int16_t rawOutput = Ringbuffer[RingRead++];
 		filteredOutput = (alpha * rawOutput) + ((1 - alpha) * filteredOutput);
+		amplifiedOutput = filteredOutput * vol;
+		
 		OCR2A = filteredOutput; // Output LSB of 16-bit DAC
+		
+		//uncomment this for the amplified out
+		//OCR2A = amplifiedOutput;
 		RingCount--;
 	}
 
@@ -93,8 +100,9 @@ void setup()
 	}
 
 	pinMode(LFilterPin, INPUT);
+	pinMode(VolPin, INPUT);
 
-	// 8-bit PWM DAC pin+
+	// 8-bit PWM DAC pin
 	pinMode(11, OUTPUT);
 
 	// Set up Timer 1 to send a sample every interrupt.
@@ -164,7 +172,8 @@ void setup()
 
 void loop()
 {
-
+	//read volume pin
+  vol = map(analogRead(VolPin), 0, 1023, 1, 99) / 100.0;
 	//------ Add current sample word to ringbuffer FIFO --------------------
 
 	if (RingCount < 255)
